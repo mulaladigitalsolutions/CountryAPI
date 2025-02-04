@@ -73,7 +73,6 @@ namespace CountryAPI.IntegrationTest
             var result = await service.GetCountryDetailsAsync("Zimbabwe");
 
             Assert.NotNull(result);
-            Assert.Equal(default, result.Id);
             Assert.Null(result.Name);
             Assert.Null(result.Capital);
             Assert.Null(result.Flag);

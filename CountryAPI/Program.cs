@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 // Register repositories and services
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddHttpClient();
 
 // AutoMapper configuration
 var mappingConfig = new MapperConfiguration(mc =>
