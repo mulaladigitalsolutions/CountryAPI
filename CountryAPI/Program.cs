@@ -1,4 +1,5 @@
 using AutoMapper;
+using Country.Infrastructure.Configuration;
 using Country.Infrastructure.DBContext;
 using Country.Infrastructure.Repository;
 using Country.Infrastructure.Repository.Interface;
@@ -13,10 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+
 // Register DbContext with Scoped lifetime (default)
 builder.Services.AddDbContext<CountryDbContext>(option =>
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
-    ServiceLifetime.Scoped);  // Use Scoped instead of Singleton
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));  // Use Scoped instead of Singleton
 
 
 // Add Swagger/OpenAPI documentation
@@ -51,6 +52,7 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1"
     });
 });
+builder.Services.AddMemoryCache();
 
 builder.Services.AddCors(options =>
 {
@@ -62,6 +64,9 @@ builder.Services.AddCors(options =>
                   .AllowAnyHeader();
         });
 });
+
+builder.Services.Configure<CountryApiSettings>(
+    builder.Configuration.GetSection("CountryApiSettings"));
 
 var app = builder.Build();
 

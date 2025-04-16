@@ -1,5 +1,6 @@
 using Country.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 
 namespace CountryAPI.Controllers
@@ -8,9 +9,10 @@ namespace CountryAPI.Controllers
     [ApiController]
     public class CountryController : ControllerBase
     {
+        private readonly ILogger<CountryController> _logger;
         private readonly ICountryService _countryService;
 
-        public CountryController(ICountryService countryService) => _countryService = countryService;
+        public CountryController(ILogger<CountryController> logger, ICountryService countryService) { _logger = logger; _countryService = countryService; }
 
         /// <summary>
         /// Returns list of all countries and their information.
@@ -51,9 +53,10 @@ namespace CountryAPI.Controllers
                     return Ok(countryDetails);
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //Log the error somewhere either to a file, elastic or some database
+                    _logger.LogError(ex.Message);
                 }
             }
 

@@ -1,13 +1,9 @@
-﻿
-using System.Net.Http;
-using System.Threading.Tasks;
-using Country.Services.Services.Interfaces;
+﻿using Country.Services.Services.Interfaces;
 using CountryAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
-namespace CountryAPI.Tests
+namespace CountryAPI.ControllerTests
 {
     public class CountryControllerTests
     {
@@ -17,7 +13,7 @@ namespace CountryAPI.Tests
         public CountryControllerTests()
         {
             _mockService = new Mock<ICountryService>();
-            _controller = new CountryController(_mockService.Object);
+            //_controller = new CountryController(_mockService.Object);
         }
 
         [Fact]
@@ -25,8 +21,8 @@ namespace CountryAPI.Tests
         {
             var countries = new List<Country.Domain.Entities.Country>
             {
-                new Country.Domain.Entities.Country { Name = "USA", Flag = "🇺🇸" },
-                new Country.Domain.Entities.Country { Name = "Canada", Flag = "🇨🇦" }
+                new() { Name = "USA", Flag = "🇺🇸" },
+                new() { Name = "Canada", Flag = "🇨🇦" }
             };
             _mockService.Setup(service => service.GetCountriesAsync()).ReturnsAsync(countries);
 
